@@ -58,34 +58,37 @@ def get_contents(path):
     with open(path, 'r', encoding='utf-8') as f:
         return f.read()
 
-def send_email(src, dst, subject, body):
+def send_email(src, dst, subject, contents, attachments):
     pwd = os.environ.get('wangyi_emai_auth')
 
     yag = yagmail.SMTP(user=src, password=pwd, host='smtp.163.com', port='465')
-    yag.send(to=dst, subject=subject, contents=body)
+    yag.send(to=dst, subject=subject, contents=contents, attachments=attachments)
     yag.close()
 
-def send_emails(src, tos, subject, body):
+def send_emails(src, tos, subject, contents, attachments):
     for to in tos:
-        send_email(src, to, subject, body)  
+        send_email(src, to, subject, contents, attachments)  
 
 def daily_task():
     path = job()
     src = '19121220286@163.com'
     tos = ['pxxhl@qq.com']
     subject = '每日 GitHub 趋势项目'
-    contents = ['这里是邮件正文', get_contents(path), path]
+    contents =get_contents(path)
+    attachments = path
     
-    send_emails(src, tos, subject, contents)
+    send_emails(src, tos, subject, contents, attachments)
 
 if __name__ == '__main__':
-    # 设置时区为北京时间
-    beijing_tz = pytz.timezone('Asia/Shanghai')
-    now = datetime.datetime.now(beijing_tz)
+    # # 设置时区为北京时间
+    # beijing_tz = pytz.timezone('Asia/Shanghai')
+    # now = datetime.datetime.now(beijing_tz)
 
-    # 每天12:30执行任务
-    schedule.every().day.at("12:12", beijing_tz).do(daily_task)
+    # # 每天12:30执行任务
+    # schedule.every().day.at("12:12", beijing_tz).do(daily_task)
 
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    # while True:
+    #     schedule.run_pending()
+    #     time.sleep(1)
+
+    daily_task()

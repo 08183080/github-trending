@@ -7,10 +7,33 @@ import schedule
 import time
 import pytz
 from pyquery import PyQuery as pq
+from zhipuai import ZhipuAI
 
-def createMarkdown(date, filename):
+
+def get_ai_analysis(path):
+    client = ZhipuAI(api_key=os.environ.get("ZHIPUAI_API_KEY"))
+    def get_trends(path):
+        with open(path, 'r', encoding='utf-8') as f:
+            return f.read()
+    
+    trends = get_trends(path)
+    # print(trends)
+
+    response = client.chat.completions.create(
+        model="glm-4-flash",  # 填写需要调用的模型编码
+        messages=[
+            {"role": "system", "content": "你是一个 github trends 分析专家。负责分析 github 每日 python 项目的趋势。将英文介绍翻译成中文。输出整齐精致。接着在下一行，安利一个最惊艳的项目。再换一行，最后总结今天的趋势项目关注的领域和特点。语言保持简洁。"},
+            {"role": "user", "content":f'{trends}' }
+        ],
+    )
+
+    ans = response.choices[0].message.content
+    # print(ans)
+    return ans
+
+def createtext(date, filename):
     with open(filename, 'w') as f:
-        f.write("## " + date + "\n")
+        f.write(date + "\n")
 
 def scrape(language, filename):
     HEADERS = {
@@ -29,9 +52,9 @@ def scrape(language, filename):
 
     # codecs to solve the problem utf-8 codec like chinese
     with codecs.open(filename, "a", "utf-8") as f:
-        f.write('\n### {language}\n'.format(language=language))
+        f.write('\n{language}\n'.format(language=language))
 
-        for item in items:
+        for index, item in enumerate(items, start=1):
             i = pq(item)
             title = i(".lh-condensed a").text()
             owner = i(".lh-condensed span.text-normal").text()
@@ -40,17 +63,22 @@ def scrape(language, filename):
             url = "https://github.com" + url
             # ownerImg = i("p.repo-list-meta a img").attr("src")
             # print(ownerImg)
-            f.write(u"* [{title}]({url}):{description}\n".format(title=title, url=url, description=description))
+            f.write(u"{index}. [{title}]:{description} ({url})\n".format(index=index, title=title, url=url, description=description))
 
 def job():
     strdate = datetime.datetime.now().strftime('%Y-%m-%d')
-    filename = '{date}.md'.format(date=strdate)
+    filename = '{date}.txt'.format(date=strdate)
 
     # create markdown file
-    createMarkdown(strdate, filename)
+    createtext(strdate, filename)
 
     # write markdown
     scrape('python', filename)
+
+    ans = get_ai_analysis(filename)
+
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write(ans)
 
     return filename
 

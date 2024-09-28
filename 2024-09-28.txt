@@ -1,0 +1,30 @@
+2024-09-28
+
+python
+1. [meta-llama / llama-stack]:Llama Stack API 的模型组件（https://github.com/meta-llama/llama-stack）
+2. [meta-llama / llama-stack-apps]:Llama Stack API 的代理组件（https://github.com/meta-llama/llama-stack-apps）
+3. [meta-llama / llama-models]:用于 Llama 模型的实用工具（https://github.com/meta-llama/llama-models）
+4. [hacksider / Deep-Live-Cam]:仅使用一张图片即可实现实时面部交换和一键视频深度伪造（https://github.com/hacksider/Deep-Live-Cam）
+5. [microsoft / RD-Agent]:研发（R&D）对于提高工业生产效率至关重要，尤其是在人工智能时代，研发的核心方面主要集中在数据和模型上。我们致力于通过我们的开源研发自动化工具 RD-Agent 自动化这些高价值通用研发流程，让 AI 驱动数据驱动的 AI。（https://github.com/microsoft/RD-Agent）
+6. [stanfordnlp / dspy]:DSPy：用于编程基础模型的框架（https://github.com/stanfordnlp/dspy）
+7. [explodinggradients / ragas]:用于评估您的检索增强生成（RAG）管道的评估框架（https://github.com/explodinggradients/ragas）
+8. [unclecode / crawl4ai]:🔥🕷️ Crawl4AI：开源的 LLM 友好型网页爬虫和抓取器（https://github.com/unclecode/crawl4ai）
+9. [huggingface / trl]:使用强化学习训练 Transformer 语言模型（https://github.com/huggingface/trl）
+10. [hyperknot / openfreemap]:使用 OpenStreetMap 数据的免费和开源地图托管解决方案，具有用于网站和应用的定制样式（https://github.com/hyperknot/openfreemap）
+11. [odoo / odoo]:Odoo。开源应用程序，助力您的业务增长。（https://github.com/odoo/odoo）
+12. [simonw / llm]:从命令行访问大型语言模型（https://github.com/simonw/llm）
+13. [Sinaptik-AI / pandas-ai]:与您的数据库（SQL、CSV、pandas、polars、mongodb、noSQL 等）进行对话。PandasAI 使用 LLM（GPT 3.5 / 4、Anthropic、VertexAI）和 RAG 使数据分析对话化。（https://github.com/Sinaptik-AI/pandas-ai）
+14. [openai / tiktoken]:tiktoken 是用于 OpenAI 模型的快速 BPE 分词器（https://github.com/openai/tiktoken）
+15. [cpacker / MemGPT]:Letta（前称 MemGPT）是一个用于创建状态化 LLM 服务的框架。（https://github.com/cpacker/MemGPT）
+16. [TheAlgorithms / Python]:所有在 Python 中实现的算法（https://github.com/TheAlgorithms/Python）
+17. [meta-llama / llama]:Llama 模型的推理代码（https://github.com/meta-llama/llama）
+18. [meta-llama / llama3]:Meta Llama 3 的官方 GitHub 网站（https://github.com/meta-llama/llama3）
+
+惊艳项目推荐：
+[hacksider / Deep-Live-Cam]: Deep-Live-Cam 通过仅使用一张图片即可实现实时面部交换和一键视频深度伪造，展现了深度学习在图像处理领域的强大能力。
+
+今日趋势项目关注的领域和特点：
+- 深度学习与图像处理：如 Deep-Live-Cam 和 Llama Stack 模型组件等，展示了深度学习在图像识别、处理和生成方面的应用。
+- 人工智能研发自动化：如 Microsoft 的 RD-Agent 项目，旨在通过自动化流程提高研发效率。
+- 数据分析与处理：如 pandas-ai 和 crawl4ai 项目，展示了数据分析在各个领域的应用。
+- 开源项目：如 OpenFreemap 和 tiktoken，体现了开源社区对技术创新的推动作用。

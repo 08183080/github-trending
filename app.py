@@ -71,20 +71,22 @@ def scrape(language, filename):
 
 def job():
     strdate = datetime.datetime.now().strftime('%Y-%m-%d')
-    filename = '{date}.txt'.format(date=strdate)
-
-    # create text file
+    filename = f'{strdate}.txt'
     createtext(strdate, filename)
+    attempts = 0
 
-    # write markdown
-    scrape('python', filename)
-
-    ans = get_ai_analysis(filename)
-
-    with open(filename, 'w', encoding='utf-8') as f:
-        f.write(ans)
-
-    return filename
+    while attempts < 3:
+        try:
+            scrape('python', filename)
+            ans = get_ai_analysis(filename)
+            with open(filename, 'w', encoding='utf-8') as f:
+                f.write(ans)
+            return filename
+        except Exception as e:
+            attempts += 1
+            print(f"Attempt {attempts} failed with error: {e}")
+            time.sleep(300)  # Wait 5min before retrying
+    raise Exception("All attempts to scrape data have failed.")
 
 def get_contents(path):
     with open(path, 'r', encoding='utf-8') as f:
@@ -102,23 +104,30 @@ def send_emails(src, tos, subject, contents, attachments):
         send_email(src, to, subject, contents, attachments)  
 
 def daily_task():
-    path = job()
-    src = '19121220286@163.com'
-    tos = get_emails('emails.txt') #['pxxhl@qq.com']
-    subject = '每日 GitHub 趋势项目'
-    contents =get_contents(path)
-    attachments = path
-    
-    send_emails(src, tos, subject, contents, attachments)
+    try:
+        path = job()
+        src = '19121220286@163.com'
+        tos = get_emails('emails.txt') #['pxxhl@qq.com']
+        subject = '每日 GitHub 趋势项目'
+        contents = get_contents(path)
+        attachments = path
+        
+        send_emails(src, tos, subject, contents, attachments)
+    except Exception as e:
+        print(f"{e} occured in daily_task")
 
 if __name__ == '__main__':
-    # 设置时区为北京时间
-    beijing_tz = pytz.timezone('Asia/Shanghai')
-    now = datetime.datetime.now(beijing_tz)
+    try:
+        # 设置时区为北京时间
+        beijing_tz = pytz.timezone('Asia/Shanghai')
+        now = datetime.datetime.now(beijing_tz)
 
-    # 每天定时执行任务
-    schedule.every().day.at("10:02", beijing_tz).do(daily_task)
+        # 每天定时执行任务
+        schedule.every().day.at("18:00", beijing_tz).do(daily_task)
 
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+        # daily_task()
+    except Exception as e:
+        print(f"{e} occured~")
